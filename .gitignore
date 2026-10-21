@@ -1,0 +1,38 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python environments
+.venv/
+.venv313/
+venv/
+__pycache__/
+*.py[cod]
+
+# Private memory and creator data
+nexus_core/memory.json
+nexus_core/personal_memory.json
+nexus_core/creator_profile.json
+
+# Backups and local tests
+backups/
+*_backup*.py
+main_before_commands_backup.py
+test_groq.py
+*.wav
+
+# Voice models (large files)
+voices/*.onnx
+voices/*.onnx.json
+
+# Local files
+screenshots/
+structure.txt
+structure_small.txt
+# Groq API key file
+nexus_core/key groq api.txt
+
+# Core backups and cache
+nexus_core/*backup*.py
+nexus_core/__pycache__/
