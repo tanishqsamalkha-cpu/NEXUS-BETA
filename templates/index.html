@@ -1,33 +1,590 @@
+
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#070a11">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#070a11">
 <title>NEXUS BETA — Personal AI</title>
 <style>
-:root{--bg:#070a11;--panel:rgba(15,22,36,.9);--line:rgba(105,178,255,.18);--text:#e8f1ff;--muted:#8d9bb2;--cyan:#62e6ff;--green:#70f0bd;--red:#ff778d;--amber:#ffd58a}*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);font-family:Inter,Segoe UI,system-ui,sans-serif;background:radial-gradient(ellipse at 70% -10%,#17305b 0,transparent 48%),radial-gradient(ellipse at 10% 80%,#09252d 0,transparent 35%),var(--bg)}body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.17;background-image:linear-gradient(#649ee00d 1px,transparent 1px),linear-gradient(90deg,#649ee00d 1px,transparent 1px);background-size:44px 44px}.shell{position:relative;width:min(1500px,100%);margin:auto;padding:22px}header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border:1px solid #62e6ff99;border-radius:14px;display:grid;place-items:center;color:var(--cyan);font-weight:900;font-size:22px;box-shadow:0 0 25px #62e6ff18}.brand h1{font-size:16px;letter-spacing:.2em;margin:0}.brand p{font-size:10px;letter-spacing:.14em;color:var(--muted);margin:5px 0 0}.pill{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:30px;padding:9px 12px;background:#0c121db3}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:7px;box-shadow:0 0 10px var(--green)}.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:18px;min-height:calc(100vh - 110px)}.sidebar,.main{border:1px solid var(--line);border-radius:22px;background:var(--panel);box-shadow:0 20px 70px #0005;backdrop-filter:blur(15px)}.sidebar{padding:18px;display:flex;flex-direction:column;gap:20px}.eyebrow{color:var(--cyan);font-size:10px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px}.orb-wrap{display:grid;place-items:center;padding:14px 0 7px}.orb{width:124px;height:124px;border-radius:50%;position:relative;display:grid;place-items:center;background:radial-gradient(circle at 36% 30%,#c8fbff 0,#63d9ff 5%,#226aaf 22%,#0a1d3b 53%,#070b16 70%);border:1px solid #72ecff88;box-shadow:0 0 28px #41d1ff38,0 0 55px #418eff20,inset 0 0 18px #72ecff80}.orb:before,.orb:after{content:"";position:absolute;inset:-11px;border:1px solid #62e6ff44;border-radius:50%;transform:rotateX(68deg) rotateZ(18deg)}.orb:after{inset:-18px;transform:rotateX(68deg) rotateZ(-36deg);border-color:#6b8cff55}.core{width:34px;height:34px;border:1px solid #dcfaff;border-radius:50%;box-shadow:0 0 28px var(--cyan),inset 0 0 15px var(--cyan)}.orb.thinking,.orb.speaking{animation:pulse .8s ease-in-out infinite alternate}@keyframes pulse{to{filter:brightness(1.5);transform:scale(1.035)}}.statusline{text-align:center;font-size:12px;font-weight:700;margin-top:14px}.sub{text-align:center;color:var(--muted);font-size:11px;margin-top:5px}.statusgrid{display:grid;gap:8px}.statuscard{padding:11px;border:1px solid var(--line);border-radius:12px;background:#0a101bc0;display:flex;justify-content:space-between;gap:8px;font-size:11px}.statuscard span{color:var(--muted)}.green{color:var(--green)}.amber{color:var(--amber)}.red{color:var(--red)}button{font:inherit;cursor:pointer}.actions{display:grid;gap:8px}.btn,.quick,.iconbtn{border:1px solid var(--line);color:var(--text);background:#121d2dc9;transition:.15s}.btn{border-radius:11px;padding:11px;text-align:left;font-size:12px}.btn:hover,.quick:hover,.iconbtn:hover{border-color:#62e6ff88;background:#1d354ecc}.creator{border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:11px;line-height:1.6}.creator strong{display:block;color:var(--text);font-size:12px}.main{display:flex;flex-direction:column;overflow:hidden;min-width:0}.panelhead{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.panelhead h2{font-size:13px;letter-spacing:.08em;margin:0}.panelhead p{font-size:11px;color:var(--muted);margin:5px 0 0}.iconbtn{border-radius:10px;width:36px;height:36px;font-size:17px}.chat{padding:22px;display:flex;flex-direction:column;gap:16px;flex:1;min-height:300px;overflow-y:auto;max-height:calc(100vh - 300px)}.welcome{text-align:center;margin:auto;max-width:510px;padding:32px 10px}.welcome .mark{font-size:11px;letter-spacing:.2em;color:var(--cyan)}.welcome h3{font-size:clamp(25px,3vw,36px);line-height:1.15;letter-spacing:-.04em;margin:13px 0}.welcome p{font-size:13px;line-height:1.7;color:var(--muted);max-width:420px;margin:0 auto 20px}.quickprompts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.quick{border-radius:30px;padding:9px 12px;font-size:11px}.message{display:flex;gap:10px;max-width:88%;animation:appear .16s ease-out}.message.user{align-self:flex-end;flex-direction:row-reverse}@keyframes appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}.avatar{width:30px;height:30px;flex:0 0 30px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:#101d30;color:var(--cyan);font-size:10px}.user .avatar{color:#d9e1ff;background:#1c2440}.content{min-width:0}.label{font-size:10px;color:var(--muted);margin:0 0 5px 2px}.user .label{text-align:right}.bubble{padding:12px 14px;border:1px solid var(--line);border-radius:4px 14px 14px 14px;background:#101929e0;font-size:13px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}.user .bubble{border-radius:14px 4px 14px 14px;background:#1f2f4ec4}.composerwrap{border-top:1px solid var(--line);padding:15px 18px 17px;background:#070c15a6}.tools{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.toggle{font-size:11px;color:var(--muted);display:flex;gap:8px;align-items:center}.toggle input{accent-color:var(--cyan)}.hint,.foot{font-size:10px;color:#68778e}.composer{display:flex;align-items:flex-end;gap:10px;border:1px solid #62e6ff40;background:#0a111e;border-radius:15px;padding:9px}textarea{width:100%;min-height:44px;max-height:140px;resize:vertical;border:0;outline:0;color:var(--text);background:transparent;padding:11px 9px;font:13px/1.5 inherit}textarea::placeholder{color:#65748b}.send{height:42px;min-width:86px;border:1px solid #62e6ff88;border-radius:11px;color:white;font-weight:700;font-size:12px;background:linear-gradient(135deg,#308bbbe6,#455bb4e6)}.send:disabled{opacity:.5;cursor:wait}.foot{text-align:center;margin-top:10px;color:#53627a}.toast{position:fixed;right:20px;bottom:20px;padding:12px 15px;border:1px solid var(--line);background:#121d2d;border-radius:12px;display:none;max-width:min(420px,calc(100vw - 40px));font-size:12px;z-index:5}.typing{color:var(--cyan)}@media(max-width:900px){.layout{grid-template-columns:220px 1fr}.shell{padding:14px}.orb{width:105px;height:105px}}@media(max-width:680px){.shell{padding:10px}header{align-items:flex-start}.layout{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:13px}.orb{width:84px;height:84px}.core{width:26px;height:26px}.actions,.creator{display:none}.chat{max-height:none;min-height:44vh;padding:15px 12px}.message{max-width:100%}.panelhead{padding:14px}.composerwrap{padding:12px}.hint{display:none}.top-right .pill:last-child{display:none}}
+:root{--bg:#070a11;--panel:rgba(15,22,36,.9);--line:rgba(105,178,255,.18);--text:#e8f1ff;--muted:#8d9bb2;--cyan:#62e6ff;--green:#70f0bd;--red:#ff778d;--amber:#ffd58a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--text);font-family:Inter,Segoe UI,system-ui,sans-serif;background:radial-gradient(ellipse at 70% -10%,#17305b 0,transparent 48%),radial-gradient(ellipse at 10% 80%,#09252d 0,transparent 35%),var(--bg)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.17;background-image:linear-gradient(#649ee00d 1px,transparent 1px),linear-gradient(90deg,#649ee00d 1px,transparent 1px);background-size:44px 44px}
+.shell{position:relative;width:min(1500px,100%);margin:auto;padding:22px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border:1px solid #62e6ff99;border-radius:14px;display:grid;place-items:center;color:var(--cyan);font-weight:900;font-size:22px;box-shadow:0 0 25px #62e6ff18}
+.brand h1{font-size:16px;letter-spacing:.2em;margin:0}
+.brand p{font-size:10px;letter-spacing:.14em;color:var(--muted);margin:5px 0 0}
+.pill{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:30px;padding:9px 12px;background:#0c121db3}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:7px;box-shadow:0 0 10px var(--green)}
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:18px;min-height:calc(100vh - 110px)}
+.sidebar,.main{border:1px solid var(--line);border-radius:22px;background:var(--panel);box-shadow:0 20px 70px #0005;backdrop-filter:blur(15px)}
+.sidebar{padding:18px;display:flex;flex-direction:column;gap:20px}
+.eyebrow{color:var(--cyan);font-size:10px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px}
+.orb-wrap{display:grid;place-items:center;padding:14px 0 7px}
+.orb{width:124px;height:124px;border-radius:50%;position:relative;display:grid;place-items:center;background:radial-gradient(circle at 36% 30%,#c8fbff 0,#63d9ff 5%,#226aaf 22%,#0a1d3b 53%,#070b16 70%);border:1px solid #72ecff88;box-shadow:0 0 28px #41d1ff38,0 0 55px #418eff20,inset 0 0 18px #72ecff80}
+.orb:before,.orb:after{content:"";position:absolute;inset:-11px;border:1px solid #62e6ff44;border-radius:50%;transform:rotateX(68deg) rotateZ(18deg)}
+.orb:after{inset:-18px;transform:rotateX(68deg) rotateZ(-36deg);border-color:#6b8cff55}
+.core{width:34px;height:34px;border:1px solid #dcfaff;border-radius:50%;box-shadow:0 0 28px var(--cyan),inset 0 0 15px var(--cyan)}
+.orb.thinking,.orb.speaking{animation:pulse .8s ease-in-out infinite alternate}
+@keyframes pulse{to{filter:brightness(1.5);transform:scale(1.035)}}
+.statusline{text-align:center;font-size:12px;font-weight:700;margin-top:14px}
+.sub{text-align:center;color:var(--muted);font-size:11px;margin-top:5px}
+.statusgrid{display:grid;gap:8px}
+.statuscard{padding:11px;border:1px solid var(--line);border-radius:12px;background:#0a101bc0;display:flex;justify-content:space-between;gap:8px;font-size:11px}
+.statuscard span{color:var(--muted)}
+.green{color:var(--green)}.amber{color:var(--amber)}.red{color:var(--red)}
+button{font:inherit;cursor:pointer}
+.actions{display:grid;gap:8px}
+.btn,.quick,.iconbtn,.stopvoice{border:1px solid var(--line);color:var(--text);background:#121d2dc9;transition:.15s}
+.btn{border-radius:11px;padding:11px;text-align:left;font-size:12px}
+.btn:hover,.quick:hover,.iconbtn:hover,.stopvoice:hover{border-color:#62e6ff88;background:#1d354ecc}
+.creator{border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:11px;line-height:1.6}
+.creator strong{display:block;color:var(--text);font-size:12px}
+.main{display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.panelhead{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.panelhead h2{font-size:13px;letter-spacing:.08em;margin:0}
+.panelhead p{font-size:11px;color:var(--muted);margin:5px 0 0}
+.iconbtn{border-radius:10px;width:36px;height:36px;font-size:17px}
+.chat{padding:22px;display:flex;flex-direction:column;gap:16px;flex:1;min-height:300px;overflow-y:auto;max-height:calc(100vh - 300px)}
+.welcome{text-align:center;margin:auto;max-width:510px;padding:32px 10px}
+.welcome .mark{font-size:11px;letter-spacing:.2em;color:var(--cyan)}
+.welcome h3{font-size:clamp(25px,3vw,36px);line-height:1.15;letter-spacing:-.04em;margin:13px 0}
+.welcome p{font-size:13px;line-height:1.7;color:var(--muted);max-width:420px;margin:0 auto 20px}
+.quickprompts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.quick{border-radius:30px;padding:9px 12px;font-size:11px}
+.message{display:flex;gap:10px;max-width:88%;animation:appear .16s ease-out}
+.message.user{align-self:flex-end;flex-direction:row-reverse}
+@keyframes appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.avatar{width:30px;height:30px;flex:0 0 30px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:#101d30;color:var(--cyan);font-size:10px}
+.user .avatar{color:#d9e1ff;background:#1c2440}
+.content{min-width:0}
+.label{font-size:10px;color:var(--muted);margin:0 0 5px 2px}
+.user .label{text-align:right}
+.bubble{padding:12px 14px;border:1px solid var(--line);border-radius:4px 14px 14px 14px;background:#101929e0;font-size:13px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.user .bubble{border-radius:14px 4px 14px 14px;background:#1f2f4ec4}
+.composerwrap{border-top:1px solid var(--line);padding:15px 18px 17px;background:#070c15a6}
+.tools{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.toggle{font-size:11px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.toggle input{accent-color:var(--cyan)}
+.voicecontrols{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.voice-select{max-width:150px;border:1px solid var(--line);border-radius:9px;background:#0a111e;color:var(--text);padding:7px;font-size:11px}
+.stopvoice{border-radius:9px;padding:7px 10px;font-size:11px}
+.hint,.foot{font-size:10px;color:#68778e}
+.composer{display:flex;align-items:flex-end;gap:10px;border:1px solid #62e6ff40;background:#0a111e;border-radius:15px;padding:9px}
+textarea{width:100%;min-height:44px;max-height:140px;resize:vertical;border:0;outline:0;color:var(--text);background:transparent;padding:11px 9px;font:13px/1.5 inherit}
+textarea::placeholder{color:#65748b}
+.send{height:42px;min-width:86px;border:1px solid #62e6ff88;border-radius:11px;color:white;font-weight:700;font-size:12px;background:linear-gradient(135deg,#308bbbe6,#455bb4e6)}
+.send:disabled{opacity:.5;cursor:wait}
+.foot{text-align:center;margin-top:10px;color:#53627a}
+.toast{position:fixed;right:20px;bottom:20px;padding:12px 15px;border:1px solid var(--line);background:#121d2d;border-radius:12px;display:none;max-width:min(420px,calc(100vw - 40px));font-size:12px;z-index:5}
+.typing{color:var(--cyan)}
+@media(max-width:900px){.layout{grid-template-columns:220px 1fr}.shell{padding:14px}.orb{width:105px;height:105px}}
+@media(max-width:680px){.shell{padding:10px}header{align-items:flex-start}.layout{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:13px}.orb{width:84px;height:84px}.core{width:26px;height:26px}.actions,.creator{display:none}.chat{max-height:none;min-height:44vh;padding:15px 12px}.message{max-width:100%}.panelhead{padding:14px}.composerwrap{padding:12px}.hint{display:none}.top-right .pill:last-child{display:none}.voicecontrols{width:100%}.voice-select{flex:1;max-width:none}}
 </style>
 </head>
-<body><div class="shell">
-<header><div class="brand"><div class="logo">N</div><div><h1>NEXUS <span style="color:var(--cyan)">BETA</span></h1><p>PERSONAL AI SYSTEM · LOCAL WEB INTERFACE</p></div></div><div class="pill"><span class="dot"></span> LOCAL SESSION <span id="clock" style="margin-left:8px">SYSTEM ONLINE</span></div></header>
-<div class="layout"><aside class="sidebar"><section><div class="eyebrow">Core interface</div><div class="orb-wrap"><div class="orb" id="orb"><div class="core"></div></div></div><div class="statusline" id="statusline">SYSTEM STANDBY</div><div class="sub" id="sub">Waiting for your message</div></section>
-<section><div class="eyebrow">System diagnostics</div><div class="statusgrid"><div class="statuscard"><span>Groq AI</span><strong id="groq">Checking…</strong></div><div class="statuscard"><span>Ollama fallback</span><strong class="green">AVAILABLE</strong></div><div class="statuscard"><span>Piper voice files</span><strong id="voice">Checking…</strong></div><div class="statuscard"><span>Saved facts</span><strong id="facts">—</strong></div></div></section>
-<section class="actions"><div class="eyebrow">Actions</div><button class="btn" id="clear">＋ &nbsp; New chat (clear history)</button><button class="btn" id="refresh">↻ &nbsp; Refresh system status</button><button class="btn" id="profile">◎ &nbsp; Show creator profile</button><button class="btn" id="memory">▤ &nbsp; View saved facts</button></section>
-<div class="creator"><strong id="creator">NEXUS Creator</strong>Founder &amp; developer profile connected<br><span style="color:#53627a">NEXUS BETA · BUILD IN PROGRESS</span></div></aside>
-<main class="main"><div class="panelhead"><div><h2>AI COMMUNICATION CHANNEL</h2><p>Chat with your personal assistant</p></div><button class="iconbtn" id="reload" title="Reload saved chat">↻</button></div>
-<section class="chat" id="chat" aria-live="polite"><div class="welcome" id="welcome"><div class="mark">◈ NEXUS ONLINE ◈</div><h3>Your assistant.<br><span style="color:var(--cyan)">Your command center.</span></h3><p>Core AI, smart memory and your existing voice system connected through a clean browser interface.</p><div class="quickprompts"><button class="quick" data-prompt="Bhai, apne baare mein batao">About NEXUS</button><button class="quick" data-prompt="Mere saved facts dikhao">My memory</button><button class="quick" data-prompt="Explain what you can help me with">What can you do?</button></div></div></section>
-<div class="composerwrap"><div class="tools"><label class="toggle"><input type="checkbox" id="speak" checked> Speak replies with existing Piper voice</label><span class="hint">Enter to send · Shift+Enter for new line</span></div><form class="composer" id="form"><textarea id="message" placeholder="Message NEXUS…" rows="1" maxlength="8000" required></textarea><button class="send" id="send" type="submit">SEND ↗</button></form><div class="foot">Private local interface · 127.0.0.1 · Keep your API key private</div></div></main></div></div><div class="toast" id="toast" role="status"></div>
+<body>
+<div class="shell">
+<header>
+  <div class="brand"><div class="logo">N</div><div><h1>NEXUS <span style="color:var(--cyan)">BETA</span></h1><p>PERSONAL AI SYSTEM · PUBLIC WEB INTERFACE</p></div></div>
+  <div class="pill"><span class="dot"></span> PUBLIC SESSION <span id="clock" style="margin-left:8px">SYSTEM ONLINE</span></div>
+</header>
+
+<div class="layout">
+<aside class="sidebar">
+  <section>
+    <div class="eyebrow">Core interface</div>
+    <div class="orb-wrap"><div class="orb" id="orb"><div class="core"></div></div></div>
+    <div class="statusline" id="statusline">SYSTEM STANDBY</div>
+    <div class="sub" id="sub">Waiting for your message</div>
+  </section>
+
+  <section>
+    <div class="eyebrow">System diagnostics</div>
+    <div class="statusgrid">
+      <div class="statuscard"><span>Groq AI</span><strong id="groq">Checking…</strong></div>
+      <div class="statuscard"><span>Ollama fallback</span><strong class="amber">LOCAL ONLY</strong></div>
+      <div class="statuscard"><span>Browser voice</span><strong id="voice">Checking…</strong></div>
+      <div class="statuscard"><span>Private facts</span><strong class="amber">LOCKED</strong></div>
+    </div>
+  </section>
+
+  <section class="actions">
+    <div class="eyebrow">Actions</div>
+    <button class="btn" id="clear">＋ &nbsp; New chat (clear session)</button>
+    <button class="btn" id="refresh">↻ &nbsp; Refresh system status</button>
+    <button class="btn" id="profile">◎ &nbsp; Show public creator profile</button>
+    <button class="btn" id="memory">▤ &nbsp; Public memory status</button>
+  </section>
+
+  <div class="creator"><strong id="creator">NEXUS Creator</strong>Public project profile<br><span style="color:#53627a">NEXUS BETA · BUILD IN PROGRESS</span></div>
+</aside>
+
+<main class="main">
+  <div class="panelhead">
+    <div><h2>AI COMMUNICATION CHANNEL</h2><p>Chat with NEXUS BETA · Public mode</p></div>
+    <button class="iconbtn" id="reload" title="Start a fresh browser session">↻</button>
+  </div>
+
+  <section class="chat" id="chat" aria-live="polite">
+    <div class="welcome" id="welcome">
+      <div class="mark">◈ NEXUS ONLINE ◈</div>
+      <h3>Your assistant.<br><span style="color:var(--cyan)">Your command center.</span></h3>
+      <p>Chat with NEXUS BETA and hear replies using the voice options available on your device.</p>
+      <div class="quickprompts">
+        <button class="quick" data-prompt="Bhai, apne baare mein batao">About NEXUS</button>
+        <button class="quick" data-prompt="What public information do you know about the creator?">Creator profile</button>
+        <button class="quick" data-prompt="Explain what you can help me with">What can you do?</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="composerwrap">
+    <div class="tools">
+      <label class="toggle"><input type="checkbox" id="speak" checked> Speak AI replies</label>
+      <div class="voicecontrols">
+        <select class="voice-select" id="voiceLanguage" aria-label="Voice language">
+          <option value="auto">Auto language</option>
+          <option value="hi">Hindi voice</option>
+          <option value="en">English voice</option>
+        </select>
+        <button class="stopvoice" type="button" id="stopVoice">■ Stop voice</button>
+      </div>
+      <span class="hint">Enter to send · Shift+Enter for new line</span>
+    </div>
+
+    <form class="composer" id="form">
+      <textarea id="message" placeholder="Message NEXUS…" rows="1" maxlength="2000" required></textarea>
+      <button class="send" id="send" type="submit">SEND ↗</button>
+    </form>
+    <div class="foot">Public website · Browser voice · Private local memory is not connected</div>
+  </div>
+</main>
+</div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
 <script>
-const $=id=>document.getElementById(id),chat=$('chat');let busy=false,timer;
-function toast(t){$('toast').textContent=t;$('toast').style.display='block';clearTimeout(timer);timer=setTimeout(()=>$('toast').style.display='none',3600)}
-function mode(m,sub){$('orb').classList.remove('thinking','speaking');if(m==='thinking'||m==='speaking')$('orb').classList.add(m);$('statusline').textContent=({idle:'SYSTEM STANDBY',thinking:'PROCESSING REQUEST',speaking:'VOICE OUTPUT ACTIVE',error:'SYSTEM NOTICE'})[m]||'SYSTEM STANDBY';$('sub').textContent=sub||({idle:'Waiting for your message',thinking:'NEXUS is preparing a response',speaking:'Reply queued for local voice',error:'Check the message below'})[m]}
-function add(role,text,label){const w=$('welcome');if(w)w.remove();const row=document.createElement('div');row.className='message '+(role==='user'?'user':'assistant');const av=document.createElement('div');av.className='avatar';av.textContent=role==='user'?'YOU':'NX';const c=document.createElement('div');c.className='content';const l=document.createElement('div');l.className='label';l.textContent=label||(role==='user'?'YOU':'NEXUS');const b=document.createElement('div');b.className='bubble';b.textContent=text;c.append(l,b);row.append(av,c);chat.append(row);chat.scrollTop=chat.scrollHeight;return row}
-async function api(url,opts={}){const r=await fetch(url,{headers:{'Content-Type':'application/json'},...opts});let d={};try{d=await r.json()}catch{}if(!r.ok)throw Error(d.error||`Request failed (${r.status})`);return d}
-async function status(){try{const s=await api('/api/status');$('groq').textContent=s.ai_ready?'READY':'NO KEY';$('groq').className=s.ai_ready?'green':'amber';$('voice').textContent=s.voice_files_ready?'READY':'CHECK FILES';$('voice').className=s.voice_files_ready?'green':'amber';$('facts').textContent=s.facts_count;$('creator').textContent=s.creator||'NEXUS Creator';$('clock').textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});if(!busy)mode(s.speaking?'speaking':'idle')}catch{$('groq').textContent='OFFLINE';$('groq').className='red'}}
-async function history(){try{const d=await api('/api/history');if(d.messages&&d.messages.length){$('welcome')?.remove();d.messages.slice(-80).forEach(m=>add(m.role,m.content))}}catch{toast('Could not load saved chat history.')}}
-async function sendMessage(text){if(busy||!text.trim())return;busy=true;$('send').disabled=true;$('message').disabled=true;add('user',text);const p=add('assistant','NEXUS is processing your message…','NEXUS · WORKING');p.querySelector('.bubble').classList.add('typing');mode('thinking');try{const d=await api('/api/chat',{method:'POST',body:JSON.stringify({message:text,speak:$('speak').checked})});p.querySelector('.bubble').classList.remove('typing');p.querySelector('.bubble').textContent=d.answer;p.querySelector('.label').textContent='NEXUS';mode(d.speech_queued?'speaking':'idle');status()}catch(e){p.querySelector('.bubble').classList.remove('typing');p.querySelector('.bubble').textContent=e.message;p.querySelector('.label').textContent='NEXUS · NOTICE';mode('error','The request could not be completed')}finally{busy=false;$('send').disabled=false;$('message').disabled=false;$('message').focus()}}
-$('form').addEventListener('submit',e=>{e.preventDefault();const t=$('message').value.trim();if(t){$('message').value='';$('message').style.height='auto';sendMessage(t)}});$('message').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('form').requestSubmit()}});$('message').addEventListener('input',e=>{e.target.style.height='auto';e.target.style.height=Math.min(e.target.scrollHeight,140)+'px'});document.querySelectorAll('[data-prompt]').forEach(b=>b.onclick=()=>$('message').value=b.dataset.prompt);
-$('refresh').onclick=()=>{status();toast('System status refreshed.')};$('reload').onclick=async()=>{chat.innerHTML='';await history();if(!chat.children.length)location.reload()};$('profile').onclick=async()=>{try{const p=await api('/api/profile');add('assistant',[`Name: ${p.name||'—'}`,`Role: ${p.creator||'—'}`,`Goal: ${p.goal||'—'}`,`Release plan: ${p.release_plan||'—'}`,`Interests: ${(p.interests||[]).join(', ')}`].join('\n'),'NEXUS · CREATOR PROFILE')}catch(e){toast(e.message)}};
-$('memory').onclick=async()=>{try{const d=await api('/api/facts');if(!d.facts.length){add('assistant','No personal facts saved yet. Use the chat command /remember <fact> or add a fact through the API.','NEXUS · SMART MEMORY');return}add('assistant',d.facts.map(f=>`[${f.id}] (${f.category||'general'}) ${f.text}`).join('\n'),'NEXUS · SAVED FACTS')}catch(e){toast(e.message)}};
-$('clear').onclick=async()=>{if(!confirm('Clear saved chat history? Personal facts and creator profile will remain.'))return;try{await api('/api/clear',{method:'POST',body:JSON.stringify({confirm:true})});chat.innerHTML='';const w=document.createElement('div');w.className='welcome';w.id='welcome';w.innerHTML='<div class="mark">◈ NEXUS ONLINE ◈</div><h3>Fresh session.<br><span style="color:var(--cyan)">Ready when you are.</span></h3><p>Chat history cleared. Saved personal facts remain available.</p>';chat.append(w);toast('Chat history cleared. Personal facts are safe.');status()}catch(e){toast(e.message)}};
-status();history();setInterval(status,2500);
-</script></body></html>
+const $ = id => document.getElementById(id);
+const chat = $('chat');
+
+let busy = false;
+let timer;
+let speakingNow = false;
+let activeUtterance = null;
+
+function toast(message) {
+  $('toast').textContent = message;
+  $('toast').style.display = 'block';
+  clearTimeout(timer);
+  timer = setTimeout(() => $('toast').style.display = 'none', 3600);
+}
+
+function mode(state, subtitle) {
+  $('orb').classList.remove('thinking', 'speaking');
+  if (state === 'thinking' || state === 'speaking') {
+    $('orb').classList.add(state);
+  }
+
+  const labels = {
+    idle: 'SYSTEM STANDBY',
+    thinking: 'PROCESSING REQUEST',
+    speaking: 'VOICE OUTPUT ACTIVE',
+    error: 'SYSTEM NOTICE'
+  };
+
+  const subtitles = {
+    idle: 'Waiting for your message',
+    thinking: 'NEXUS is preparing a response',
+    speaking: 'Browser voice is speaking',
+    error: 'Check the message below'
+  };
+
+  $('statusline').textContent = labels[state] || labels.idle;
+  $('sub').textContent = subtitle || subtitles[state] || subtitles.idle;
+}
+
+function add(role, text, label) {
+  const welcome = $('welcome');
+  if (welcome) welcome.remove();
+
+  const row = document.createElement('div');
+  row.className = 'message ' + (role === 'user' ? 'user' : 'assistant');
+
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar';
+  avatar.textContent = role === 'user' ? 'YOU' : 'NX';
+
+  const content = document.createElement('div');
+  content.className = 'content';
+
+  const title = document.createElement('div');
+  title.className = 'label';
+  title.textContent = label || (role === 'user' ? 'YOU' : 'NEXUS');
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.textContent = text;
+
+  content.append(title, bubble);
+  row.append(avatar, content);
+  chat.append(row);
+  chat.scrollTop = chat.scrollHeight;
+  return row;
+}
+
+async function api(url, options = {}) {
+  const response = await fetch(url, {
+    headers: {'Content-Type': 'application/json'},
+    ...options
+  });
+
+  let data = {};
+  try {
+    data = await response.json();
+  } catch {}
+
+  if (!response.ok) {
+    throw Error(data.error || `Request failed (${response.status})`);
+  }
+  return data;
+}
+
+function browserVoiceSupported() {
+  return 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+}
+
+function updateVoiceStatus() {
+  if (browserVoiceSupported()) {
+    $('voice').textContent = 'AVAILABLE';
+    $('voice').className = 'green';
+  } else {
+    $('voice').textContent = 'NOT SUPPORTED';
+    $('voice').className = 'red';
+  }
+}
+
+function detectLanguage(text) {
+  const selected = $('voiceLanguage').value;
+
+  if (selected === 'hi') return 'hi';
+  if (selected === 'en') return 'en';
+
+  // Auto mode: Devanagari replies use Hindi; other replies use English.
+  // Choose Hindi manually for Roman-script Hinglish replies.
+  return /[\u0900-\u097F]/.test(text) ? 'hi' : 'en';
+}
+
+function chooseVoice(language) {
+  if (!browserVoiceSupported()) return null;
+
+  const voices = window.speechSynthesis.getVoices() || [];
+  const preferred = language === 'hi'
+    ? ['hi-IN', 'hi']
+    : ['en-IN', 'en-US', 'en-GB', 'en'];
+
+  for (const prefix of preferred) {
+    const found = voices.find(voice =>
+      voice.lang && voice.lang.toLowerCase().startsWith(prefix.toLowerCase())
+    );
+    if (found) return found;
+  }
+
+  if (language === 'hi') {
+    return voices.find(voice => voice.lang && voice.lang.toLowerCase().startsWith('en'))
+      || voices[0]
+      || null;
+  }
+
+  return voices.find(voice => voice.default) || voices[0] || null;
+}
+
+function stopVoice(showNotice = false) {
+  if (browserVoiceSupported()) {
+    window.speechSynthesis.cancel();
+  }
+
+  speakingNow = false;
+  activeUtterance = null;
+
+  if (!busy) mode('idle');
+
+  if (showNotice) toast('Voice stopped.');
+}
+
+function speakReply(text) {
+  if (!browserVoiceSupported()) {
+    toast('Browser voice is not supported in this browser.');
+    return;
+  }
+
+  if (!$('speak').checked || !text.trim()) return;
+
+  window.speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  const language = detectLanguage(text);
+  const voice = chooseVoice(language);
+
+  utterance.lang = language === 'hi' ? 'hi-IN' : 'en-US';
+  if (voice) {
+    utterance.voice = voice;
+    utterance.lang = voice.lang || utterance.lang;
+  }
+
+  utterance.rate = 1;
+  utterance.pitch = 1;
+  utterance.volume = 1;
+
+  activeUtterance = utterance;
+  speakingNow = true;
+  mode('speaking');
+
+  utterance.onend = () => {
+    if (activeUtterance === utterance) {
+      activeUtterance = null;
+      speakingNow = false;
+      if (!busy) mode('idle');
+    }
+  };
+
+  utterance.onerror = event => {
+    if (activeUtterance === utterance) {
+      activeUtterance = null;
+      speakingNow = false;
+      if (!busy) mode('idle');
+      if (event.error !== 'canceled' && event.error !== 'interrupted') {
+        toast('Voice playback failed. Try another voice language or browser.');
+      }
+    }
+  };
+
+  window.speechSynthesis.speak(utterance);
+}
+
+async function status() {
+  try {
+    const data = await api('/api/status');
+
+    $('groq').textContent = data.ai_ready ? 'READY' : 'NO KEY';
+    $('groq').className = data.ai_ready ? 'green' : 'amber';
+    $('creator').textContent = data.creator || 'NEXUS Creator';
+    $('clock').textContent = new Date().toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+    updateVoiceStatus();
+
+    if (!busy && !speakingNow) mode('idle');
+  } catch {
+    $('groq').textContent = 'OFFLINE';
+    $('groq').className = 'red';
+    updateVoiceStatus();
+  }
+}
+
+async function history() {
+  try {
+    const data = await api('/api/history');
+
+    if (data.messages && data.messages.length) {
+      $('welcome')?.remove();
+      data.messages.slice(-80).forEach(message => {
+        add(message.role, message.content);
+      });
+    }
+  } catch {
+    toast('Could not load the browser chat session.');
+  }
+}
+
+async function sendMessage(text) {
+  if (busy || !text.trim()) return;
+
+  stopVoice();
+  busy = true;
+  $('send').disabled = true;
+  $('message').disabled = true;
+
+  add('user', text);
+
+  const pending = add(
+    'assistant',
+    'NEXUS is processing your message…',
+    'NEXUS · WORKING'
+  );
+
+  const bubble = pending.querySelector('.bubble');
+  bubble.classList.add('typing');
+  mode('thinking');
+
+  try {
+    const data = await api('/api/chat', {
+      method: 'POST',
+      body: JSON.stringify({message: text})
+    });
+
+    bubble.classList.remove('typing');
+    bubble.textContent = data.answer || 'NEXUS could not prepare a response.';
+    pending.querySelector('.label').textContent = 'NEXUS';
+
+    if ($('speak').checked) {
+      speakReply(data.answer || '');
+    } else {
+      mode('idle');
+    }
+
+    status();
+  } catch (error) {
+    bubble.classList.remove('typing');
+    bubble.textContent = error.message;
+    pending.querySelector('.label').textContent = 'NEXUS · NOTICE';
+    mode('error', 'The request could not be completed');
+  } finally {
+    busy = false;
+    $('send').disabled = false;
+    $('message').disabled = false;
+    $('message').focus();
+
+    if (speakingNow) {
+      mode('speaking');
+    } else if ($('statusline').textContent === 'PROCESSING REQUEST') {
+      mode('idle');
+    }
+  }
+}
+
+$('form').addEventListener('submit', event => {
+  event.preventDefault();
+
+  const text = $('message').value.trim();
+  if (text) {
+    $('message').value = '';
+    $('message').style.height = 'auto';
+    sendMessage(text);
+  }
+});
+
+$('message').addEventListener('keydown', event => {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault();
+    $('form').requestSubmit();
+  }
+});
+
+$('message').addEventListener('input', event => {
+  event.target.style.height = 'auto';
+  event.target.style.height = Math.min(event.target.scrollHeight, 140) + 'px';
+});
+
+document.querySelectorAll('[data-prompt]').forEach(button => {
+  button.onclick = () => {
+    $('message').value = button.dataset.prompt;
+    $('message').focus();
+  };
+});
+
+$('speak').addEventListener('change', () => {
+  if (!$('speak').checked) {
+    stopVoice();
+    toast('Voice replies turned off.');
+  } else {
+    toast('Voice replies turned on.');
+  }
+});
+
+$('stopVoice').addEventListener('click', () => stopVoice(true));
+
+$('voiceLanguage').addEventListener('change', () => {
+  toast('Voice language preference updated.');
+});
+
+$('refresh').onclick = () => {
+  status();
+  toast('System status refreshed.');
+};
+
+$('reload').onclick = () => {
+  stopVoice();
+  chat.innerHTML = '';
+  const welcome = document.createElement('div');
+  welcome.className = 'welcome';
+  welcome.id = 'welcome';
+  welcome.innerHTML =
+    '<div class="mark">◈ NEXUS ONLINE ◈</div>' +
+    '<h3>Fresh session.<br><span style="color:var(--cyan)">Ready when you are.</span></h3>' +
+    '<p>Start a new browser chat. Private local history is not connected.</p>';
+  chat.append(welcome);
+  toast('New browser session ready.');
+};
+
+$('profile').onclick = async () => {
+  try {
+    const profile = await api('/api/profile');
+    add('assistant', [
+      `Name: ${profile.name || '—'}`,
+      `Role: ${profile.creator || '—'}`,
+      `Goal: ${profile.goal || '—'}`,
+      `Project: ${profile.release_plan || '—'}`,
+      `Interests: ${(profile.interests || []).join(', ')}`
+    ].join('\n'), 'NEXUS · PUBLIC CREATOR PROFILE');
+  } catch (error) {
+    toast(error.message);
+  }
+};
+
+$('memory').onclick = async () => {
+  try {
+    const data = await api('/api/facts');
+    add(
+      'assistant',
+      data.message || 'Private personal facts are not connected to this public website.',
+      'NEXUS · PUBLIC MODE'
+    );
+  } catch (error) {
+    toast(error.message);
+  }
+};
+
+$('clear').onclick = async () => {
+  if (!confirm('Start a new browser chat? Your private local memory is not connected.')) return;
+
+  stopVoice();
+
+  try {
+    await api('/api/clear', {
+      method: 'POST',
+      body: JSON.stringify({confirm: true})
+    });
+  } catch {}
+
+  chat.innerHTML = '';
+
+  const welcome = document.createElement('div');
+  welcome.className = 'welcome';
+  welcome.id = 'welcome';
+  welcome.innerHTML =
+    '<div class="mark">◈ NEXUS ONLINE ◈</div>' +
+    '<h3>Fresh session.<br><span style="color:var(--cyan)">Ready when you are.</span></h3>' +
+    '<p>New browser session ready. Private local memory remains separate.</p>';
+
+  chat.append(welcome);
+  toast('New browser session ready.');
+  mode('idle');
+};
+
+if (browserVoiceSupported()) {
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = updateVoiceStatus;
+}
+
+updateVoiceStatus();
+status();
+history();
+setInterval(status, 10000);
+</script>
+</body>
+</html>
